@@ -46,14 +46,23 @@ while true; do
     # here we cut the left part out, make it smaller, and annotate the picture
 
     convert /tmp/mira-current.jpg \
-            -crop 2048x1536+0+0 \
-            -repage 2048x1536 \
-            -resize 1024x \
+            -crop 1920x1024+0+0 \
+            -repage 1920x1024 \
             -fill white \
             -pointsize 24 \
             -gravity SouthEast -annotate 0 "$exifdate" \
             /tmp/mira-${exifdate//[ :]/}.jpg
 
     oldexifdate=$exifdate
+
+    echo "MIME-Version: 1.0 (mime-construct 1.9)\n" > /tmp/emlbody
+    echo "Content-Type: image/jpeg\n" >> /tmp/emlbody
+    echo "Content-Transfer-Encoding: base64" >> /tmp/emlbody
+    cat /tmp/mira-${exifdate//[ :]/}.jpg | base64 >> /tmp/emlbody
+    curl -n --user 'fons.de.la.spons@gmail.com:jb120673' \
+	 --ssl-reqd --mail-from "fons.de.la.spons@gmail.com" \
+	 --mail-rcpt "fons.de.la.spons@gmail.com" \
+	 --url 'smtps://smtp.gmail.com:465' --upload-file /tmp/emlbody \
+	 --insecure
 
 done
