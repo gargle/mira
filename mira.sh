@@ -8,6 +8,7 @@ time=$(date -u +%H%M)
 riseandset=$(grep ^$date $thisscript)
 rise=${riseandset:5:4}
 set=${riseandset:10:4}
+time=$(($rise-1))
 if [[ ${time#0} -gt 959 ]];
 then
     if [[ ${time#0} -le ${set#0} ]]; then exit; fi
@@ -15,16 +16,16 @@ else
     if [[ ${time#0} -ge ${rise#0} ]]; then exit; fi
 fi
 wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
-exifdate=$(date +"%Y%m%d%H%M%S")
+timestamp=$(date +"%Y%m%d%H%M%S")
 convert /tmp/west.jpg \
         \( +clone -crop 186x08+1094+0 +repage \) \
         -geometry +451+0 -composite /tmp/west.jpg
 
 convert /tmp/west.jpg \
         -crop 640x480+0+0 \
-        mira-w-gray-$exifdate.jpg
+        mira-w-gray-$timestamp.jpg
 
-git add mira-w-gray-$exifdate.jpg
+git add mira-w-gray-$timestamp.jpg
 
 exit
 
