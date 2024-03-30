@@ -10,9 +10,9 @@ rise=${riseandset:5:4}
 set=${riseandset:10:4}
 if [[ ${time#0} -gt 959 ]];
 then
-    if [[ ${time#0} -le ${set#0} ]]; then break; fi
+    if [[ ${time#0} -le ${set#0} ]]; then exit; fi
 else
-    if [[ ${time#0} -ge ${rise#0} ]]; then break; fi
+    if [[ ${time#0} -ge ${rise#0} ]]; then exit; fi
 fi
 wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
 exifdate=$(date +"%Y%m%d%H%M%S")
