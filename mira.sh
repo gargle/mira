@@ -7,8 +7,8 @@ thisscript=$0
 git config user.name "Automated"
 git config user.email "github-actions@users.noreply.github.com"
 
-# keep running for 15 minutes
-endrun=$((SECONDS+900))
+# keep running for 30 minutes
+endrun=$((SECONDS+1800))
 
 while [ $SECONDS -lt $endrun ]; do
     # do nothing during the day
