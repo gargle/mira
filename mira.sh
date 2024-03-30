@@ -4,6 +4,10 @@ set -x
 
 thisscript=$0
 
+# let us see what we have alredy
+
+git status
+
 # keep running for 15 minutes
 endrun=$((SECONDS+900))
 
