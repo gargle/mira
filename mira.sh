@@ -11,16 +11,13 @@ git config user.email "github-actions@users.noreply.github.com"
 endrun=$((SECONDS+900))
 
 while [ $SECONDS -lt $endrun ]; do
-    set +x
     # do nothing during the day
     date=$(date -u +%m%d)
     time=$(date -u +%H%M)
     riseandset=$(grep ^$date $thisscript)
     rise=${riseandset:5:4}
     set=${riseandset:10:4}
-    if [[ ${time#0} -le ${set#0} ]]; then sleep 15; continue; fi
-    if [[ ${time#0} -ge ${rise#0} ]]; then sleep 15; continue; fi
-    set -x
+    if [ $time \> $rise ] && [ $time \< $set ]; then sleep 15; continue; fi
     while true ; do
         oldmd5sum=($(md5sum /tmp/previous.jpg))
         wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
