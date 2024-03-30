@@ -24,8 +24,8 @@ jobs:
       - name: make sure our working copy is up to date
         run: |-
           git pull
-      - name: Install ghostscript for imagemagick
-        run: sudo apt-get install ghostscript
+      - name: Install ghostscript for imagemagick and remind
+        run: sudo apt-get install ghostscript remind
       - name: fetch an image
         run: |-
           ./mira.sh
