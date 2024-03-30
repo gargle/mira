@@ -19,15 +19,15 @@ then
 else
     if [[ ${time#0} -ge ${rise#0} ]]; then break; fi
 fi
-while true ; do
+#while true ; do
     wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
     cp /tmp/west.jpg west.jpg
-    exifdate=$(identify -format '%[date:timestamp]' /tmp/west.jpg)
-    exifdate=${exifdate/ /-}
-    exifdate=${exifdate//:/}
-    if [[ ! $exifdate == $oldexifdate ]]; then break; fi
-    sleep 15
-done
+#    exifdate=$(identify -format '%[date:timestamp]' /tmp/west.jpg)
+#    exifdate=${exifdate/ /-}
+#    exifdate=${exifdate//:/}
+#    if [[ ! $exifdate == $oldexifdate ]]; then break; fi
+#    sleep 15
+#done
 oldexifdate=$exifdate
 #convert /tmp/current.jpg \
     #        -crop 2048x768+0+0 \
