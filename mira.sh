@@ -19,7 +19,6 @@ while [ $SECONDS -lt $endrun ]; do
     riseandset=$(grep ^$date $thisscript)
     rise=${riseandset:5:4}
     set=${riseandset:10:4}
-    time=$(($rise-1))
     if [[ ${time#0} -gt 959 ]];
     then
         if [[ ${time#0} -le ${set#0} ]]; then continue; fi
