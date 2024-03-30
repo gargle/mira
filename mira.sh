@@ -2,30 +2,40 @@
 
 thisscript=$0
 
-# do nothing during the day
-date=$(date -u +%m%d)
-time=$(date -u +%H%M)
-riseandset=$(grep ^$date $thisscript)
-rise=${riseandset:5:4}
-set=${riseandset:10:4}
-time=$(($rise-1))
-if [[ ${time#0} -gt 959 ]];
-then
-    if [[ ${time#0} -le ${set#0} ]]; then exit; fi
-else
-    if [[ ${time#0} -ge ${rise#0} ]]; then exit; fi
-fi
-wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
-timestamp=$(date +"%Y%m%d%H%M%S")
-convert /tmp/west.jpg \
-        \( +clone -crop 186x08+1094+0 +repage \) \
-        -geometry +451+0 -composite /tmp/west.jpg
+# keep running for 15 minutes
+endrun=$((SECONDS+900))
 
-convert /tmp/west.jpg \
-        -crop 640x480+0+0 \
-        mira-w-gray-$timestamp.jpg
-
-git add mira-w-gray-$timestamp.jpg
+while [ $SECONDS -lt $endrun ]; do
+    # do nothing during the day
+    date=$(date -u +%m%d)
+    time=$(date -u +%H%M)
+    riseandset=$(grep ^$date $thisscript)
+    rise=${riseandset:5:4}
+    set=${riseandset:10:4}
+    time=$(($rise-1))
+    if [[ ${time#0} -gt 959 ]];
+    then
+        if [[ ${time#0} -le ${set#0} ]]; then exit; fi
+    else
+        if [[ ${time#0} -ge ${rise#0} ]]; then exit; fi
+    fi
+    while true ; do
+        oldmd5sum=($(md5sum /tmp/previous.jpg))
+        wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
+        timestamp=$(date +"%Y%m%d%H%M%S")
+        md5sum=($(md5sum /tmp/west.jpg))
+        if [[ ! $md5sum == $oldmd5sum ]]; then break; fi
+        sleep 15
+    done
+    cp /tmp/west.jpg /tmp/previous.jpg
+    convert /tmp/west.jpg \
+            \( +clone -crop 186x08+1094+0 +repage \) \
+            -geometry +451+0 -composite /tmp/west.jpg
+    convert /tmp/west.jpg \
+            -crop 640x480+0+0 \
+            mira-w-gray-$timestamp.jpg
+    git add mira-w-gray-$timestamp.jpg
+done
 
 exit
 
