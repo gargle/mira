@@ -17,8 +17,8 @@ jobs:
         with:
           timezoneLinux: "Europe/Brussels"
       - uses: actions/checkout@v3
-      - name: Install imagemagick
-        run: sudo apt-get install imagemagick
+      - name: Install ghostscript for imagemagick
+        run: sudo apt-get install ghostscript
       - name: fetch an image
         run: |-
           ./mira.sh
