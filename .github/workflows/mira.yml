@@ -1,9 +1,9 @@
 name: mira scraper
 
 on:
-  #push:
-  #  branch:
-  #    master
+  push:
+    branch:
+      master
   schedule:
     - cron: '*/1 * * * *'
 
