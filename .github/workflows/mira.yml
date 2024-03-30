@@ -12,6 +12,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    concurrency:
+        group: mira-unique-run
+        cancel-in-progress: true
+
     steps:
       - uses: szenius/set-timezone@v1.0
         with:
