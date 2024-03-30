@@ -22,7 +22,7 @@ jobs:
       - name: fetch an image
         run: |-
           ./mira.sh
-      - name: Commit and push if dashboard.txt changed
+      - name: Commit and push the new picture
         run: |-
           git config user.name "Automated"
           git config user.email "github-actions@users.noreply.github.com"
