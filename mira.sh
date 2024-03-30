@@ -17,9 +17,9 @@ while [ $SECONDS -lt $endrun ]; do
     time=$(($rise-1))
     if [[ ${time#0} -gt 959 ]];
     then
-        if [[ ${time#0} -le ${set#0} ]]; then exit; fi
+        if [[ ${time#0} -le ${set#0} ]]; then continue; fi
     else
-        if [[ ${time#0} -ge ${rise#0} ]]; then exit; fi
+        if [[ ${time#0} -ge ${rise#0} ]]; then continue; fi
     fi
     while true ; do
         oldmd5sum=($(md5sum /tmp/previous.jpg))
