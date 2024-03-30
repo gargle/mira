@@ -15,7 +15,7 @@ endrun=$((SECONDS+1800))
 while [ $SECONDS -lt $endrun ]; do
     # do nothing during the day
     date=$(date -u +%m%d)
-    time=$(date -u +%H%M --date "12 hours ago")
+    time=$(date -u +%H%M")
     riseandset=$(grep ^$date $thisscript)
     rise=${riseandset:5:4}
     set=${riseandset:10:4}
