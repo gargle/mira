@@ -8,11 +8,6 @@ time=$(date -u +%H%M)
 riseandset=$(grep ^$date $thisscript)
 rise=${riseandset:5:4}
 set=${riseandset:10:4}
-# TODO remove when not needed anymore
-echo $date $time $rise $set
-time=$(($rise-1))
-echo $date $time $rise $set
-# TODO remove up to here
 if [[ ${time#0} -gt 959 ]];
 then
     if [[ ${time#0} -le ${set#0} ]]; then break; fi
