@@ -6,7 +6,8 @@ thisscript=$0
 
 # let us see what we have alredy
 
-git status
+git config user.name "Automated"
+git config user.email "github-actions@users.noreply.github.com"
 
 # keep running for 15 minutes
 endrun=$((SECONDS+900))
@@ -42,6 +43,7 @@ while [ $SECONDS -lt $endrun ]; do
             mira-w-gray-$timestamp.jpg
     git add mira-w-gray-$timestamp.jpg
     git commit -m "Latest image: ${timestamp}"
+    git push
 done
 
 exit
