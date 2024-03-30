@@ -35,6 +35,7 @@ while [ $SECONDS -lt $endrun ]; do
         sleep 15
     done
     cp /tmp/west.jpg /tmp/previous.jpg
+    git pull
     convert /tmp/west.jpg \
             \( +clone -crop 186x08+1094+0 +repage \) \
             -geometry +451+0 -composite /tmp/west.jpg
