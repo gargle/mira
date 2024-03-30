@@ -1,0 +1,6 @@
+{
+	"name": "gnucobol environment",
+	"build": {
+		"dockerfile": "Dockerfile"
+	}
+}

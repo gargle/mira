@@ -13,7 +13,7 @@ endrun=$((SECONDS+1800))
 while [ $SECONDS -lt $endrun ]; do
     # do nothing during the day
     date=$(date -u +%m%d)
-    time=$(date -u +%H%M)
+    time=$(date -u +%H%M --date "12 hours ago")
     riseandset=$(grep ^$date $thisscript)
     rise=${riseandset:5:4}
     set=${riseandset:10:4}
@@ -34,9 +34,6 @@ while [ $SECONDS -lt $endrun ]; do
     convert /tmp/west.jpg \
             -crop 640x480+0+0 \
             mira-w-gray-$timestamp.jpg
-    git add mira-w-gray-$timestamp.jpg
-    git commit -m "Latest image: ${timestamp}"
-    git push
 done
 
 exit
