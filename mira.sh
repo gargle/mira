@@ -29,7 +29,7 @@ convert /tmp/west.jpg \
         -crop 640x480+0+0 \
         mira-w-gray-$exifdate.jpg
 
-#git add mira-w-gray-$exifdate.jpg
+git add mira-w-gray-$exifdate.jpg
 
 exit
 
