@@ -22,10 +22,14 @@ fi
 wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
 exifdate=$(date +"%Y%m%d%H%M%S")
 convert /tmp/west.jpg \
+        \( +clone -crop 186x08+1094+0 +repage \) \
+        -geometry +451+0 -composite /tmp/west.jpg
+
+convert /tmp/west.jpg \
         -crop 640x480+0+0 \
         mira-w-gray-$exifdate.jpg
 
-git add mira-w-gray-$exifdate.jpg
+#git add mira-w-gray-$exifdate.jpg
 
 exit
 
