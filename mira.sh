@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 thisscript=$0
 
 # keep running for 15 minutes
