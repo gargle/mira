@@ -22,7 +22,7 @@ fi
 #while true ; do
     wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
     cp /tmp/west.jpg west.jpg
-    echo $(identify -verbose west.jpg)
+    echo $(identify -verbose west.jpg | awk '// { print }')
     exifdate=$(identify -format '%[date:timestamp]' /tmp/west.jpg)
     exifdate=${exifdate/ /-}
     exifdate=${exifdate//:/}
