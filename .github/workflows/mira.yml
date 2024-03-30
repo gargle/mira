@@ -20,10 +20,10 @@ jobs:
       - uses: szenius/set-timezone@v1.0
         with:
           timezoneLinux: "Europe/Brussels"
+      - uses: actions/checkout@v3
       - name: make sure our working copy is up to date
         run: |-
           git pull
-      - uses: actions/checkout@v3
       - name: Install ghostscript for imagemagick
         run: sudo apt-get install ghostscript
       - name: fetch an image
