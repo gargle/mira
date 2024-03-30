@@ -1,4 +1,4 @@
-name: process_purchases scraper
+name: mira scraper
 
 on:
   #push:
