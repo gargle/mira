@@ -21,9 +21,9 @@ else
 fi
 while true ; do
     wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
-    exifdate=$(identify -verbose /tmp/west.jpg)
+    exifdate=$(identify /tmp/west.jpg)
     echo $exifdate
-    exifdate=$(identify -verbose -format '%[date:timestamp]' /tmp/west.jpg)
+    exifdate=$(identify -format '%[date:timestamp]' /tmp/west.jpg)
     exifdate=${exifdate/ /-}
     exifdate=${exifdate//:/}
     if [[ ! $exifdate == $oldexifdate ]]; then break; fi
