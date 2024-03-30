@@ -21,9 +21,7 @@ else
 fi
 #while true ; do
     wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
-    cp /tmp/west.jpg west.jpg
-    echo $(identify -verbose west.jpg | tail -n 32)
-    exifdate=$(identify -format '%[date:timestamp]' /tmp/west.jpg)
+    exifdate=$(identify -format '%[date:modify]' /tmp/west.jpg)
     exifdate=${exifdate/ /-}
     exifdate=${exifdate//:/}
     if [[ ! $exifdate == $oldexifdate ]]; then break; fi
@@ -47,6 +45,8 @@ convert /tmp/west.jpg \
         -undercolor '#00000080' -fill yellow -pointsize 24 \
         -annotate +435+27 "$(date +"%Y/%m/%d - %H:%M:%S")" \
         mira-w-gray-$exifdate.jpg
+
+git add mira-w-gray-$exifdate.jpg
 
 exit
 

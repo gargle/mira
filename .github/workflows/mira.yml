@@ -26,7 +26,6 @@ jobs:
         run: |-
           git config user.name "Automated"
           git config user.email "github-actions@users.noreply.github.com"
-          git add west.jpg
           timestamp=$(date)
           git commit -m "Latest image: ${timestamp}" || exit 0
           git push
