@@ -21,6 +21,7 @@ else
 fi
 while true ; do
     wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
+    identify -verbose -format '%[date:timestamp]' /tmp/west.jpg
     exifdate=$(identify -verbose -format '%[date:timestamp]' /tmp/west.jpg)
     exifdate=${exifdate/ /-}
     exifdate=${exifdate//:/}
