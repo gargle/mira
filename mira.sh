@@ -19,31 +19,10 @@ then
 else
     if [[ ${time#0} -ge ${rise#0} ]]; then break; fi
 fi
-while true ; do
-    wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
-    exifdate=$(identify -format '%[date:modify]' /tmp/west.jpg)
-    exifdate=${exifdate/ /-}
-    exifdate=${exifdate//:/}
-    if [[ ! $exifdate == $oldexifdate ]]; then break; fi
-    sleep 15
-done
-oldexifdate=$exifdate
-#convert /tmp/current.jpg \
-    #        -crop 2048x768+0+0 \
-    #        -repage 1024x768 \
-    #        -fill white \
-    #        -pointsize 24 \
-    #        -gravity SouthEast -annotate 0 "$exifdate" \
-    #        mira-color-$exifdate.jpg
-#convert /tmp/zuidoost.jpg \
-    #    -crop 1280x960+0+0 \
-    #    -undercolor '#00000080' -fill yellow -pointsize 24 \
-    #    -annotate +1024+22 "$(date +"%Y/%m/%d - %H:%M:%S")" \
-    #    mira-zo-gray-$exifdate.jpg
+wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
+exifdate=$(date +"%Y%m%d%H%M%S")
 convert /tmp/west.jpg \
         -crop 640x480+0+0 \
-        -undercolor '#00000080' -fill yellow -pointsize 24 \
-        -annotate +435+27 "$(date +"%Y/%m/%d - %H:%M:%S")" \
         mira-w-gray-$exifdate.jpg
 
 git add mira-w-gray-$exifdate.jpg
