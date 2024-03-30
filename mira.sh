@@ -2,67 +2,49 @@
 
 thisscript=$0
 
+# do nothing during the day
+date=$(date -u +%m%d)
+time=$(date -u +%H%M)
+riseandset=$(grep ^$date $thisscript)
+rise=${riseandset:5:4}
+set=${riseandset:10:4}
+# TODO remove when not needed anymore
+echo $date $time $rise $set
+time=$(($rise-1))
+echo $date $time $rise $set
+# TODO remove up to here
+if [[ ${time#0} -gt 959 ]];
+then
+    if [[ ${time#0} -le ${set#0} ]]; then break; fi
+else
+    if [[ ${time#0} -ge ${rise#0} ]]; then break; fi
+fi
 while true ; do
-    # run forever
-    while true; do
-        # wait during the day
-        date=$(date -u +%m%d)
-        time=$(date -u +%H%M)
-        riseandset=$(grep ^$date $thisscript)
-        rise=${riseandset:5:4}
-        set=${riseandset:10:4}
-        if [[ ${time#0} -gt 959 ]];
-        then
-            if [[ ${time#0} -le ${set#0} ]]; then break; fi
-        else
-            if [[ ${time#0} -ge ${rise#0} ]]; then break; fi
-        fi
-        # TODO remove the following two lines
-        #echo $date $time $rise $set
-        #break
-        # TODO remove the previous two lines
-        while true ; do
-            wget -O /tmp/zuidoost.jpg http://mira.telenet.be/mira_mobotix/zuidoost.jpg 2>>/tmp/wget.log
-            wget -O /tmp/noordoost.jpg http://mira.telenet.be/mira_mobotix/noordoost.jpg 2>> /tmp/wget.log
-            wget -O /tmp/west.jpg http://mira.telenet.be/mira_mobotix/west.jpg 2>> /tmp/wget.log
-            wget -O /tmp/abdij.jpg http://mira.telenet.be/mira_mobotix/abdij.jpg 2>> /tmp/wget.log
-            exifdate=$(identify -verbose -format '%[exif:DateTimeDigitized]' /tmp/zuidoost.jpg)
-            exifdate=${exifdate/ /-}
-            exifdate=${exifdate//:/}
-            if [[ ! $exifdate == $oldexifdate ]]; then break; fi
-            sleep 15
-        done
-        oldexifdate=$exifdate
-        #convert /tmp/current.jpg \
-            #        -crop 2048x768+0+0 \
-            #        -repage 1024x768 \
-            #        -fill white \
-            #        -pointsize 24 \
-            #        -gravity SouthEast -annotate 0 "$exifdate" \
-            #        mira-color-$exifdate.jpg
-        #convert /tmp/zuidoost.jpg \
-            #    -crop 1280x960+0+0 \
-            #    -undercolor '#00000080' -fill yellow -pointsize 24 \
-            #    -annotate +1024+22 "$(date +"%Y/%m/%d - %H:%M:%S")" \
-            #    mira-zo-gray-$exifdate.jpg
-        convert /tmp/noordoost.jpg \
-                -crop 1280x768+0+0 \
-                -undercolor '#00000080' -fill yellow -pointsize 24 \
-                -annotate +1024+22 "$(date +"%Y/%m/%d - %H:%M:%S")" \
-                mira-no-gray-$exifdate.jpg
-        convert /tmp/west.jpg \
-                -crop 1280x768+0+0 \
-                -undercolor '#00000080' -fill yellow -pointsize 24 \
-                -annotate +1024+22 "$(date +"%Y/%m/%d - %H:%M:%S")" \
-                mira-w-gray-$exifdate.jpg
-        convert /tmp/abdij.jpg \
-                -crop 1280x768+0+0 \
-                -undercolor '#00000080' -fill yellow -pointsize 24 \
-                -annotate +1024+22 "$(date +"%Y/%m/%d - %H:%M:%S")" \
-                mira-a-gray-$exifdate.jpg
-    done
-    sleep 60
+    wget -O /tmp/west.jpg https://mira.be/webcam/west.jpg 2>>/tmp/wget.log
+    exifdate=$(identify -verbose -format '%[date:timestamp]' /tmp/west.jpg)
+    exifdate=${exifdate/ /-}
+    exifdate=${exifdate//:/}
+    if [[ ! $exifdate == $oldexifdate ]]; then break; fi
+    sleep 15
 done
+oldexifdate=$exifdate
+#convert /tmp/current.jpg \
+    #        -crop 2048x768+0+0 \
+    #        -repage 1024x768 \
+    #        -fill white \
+    #        -pointsize 24 \
+    #        -gravity SouthEast -annotate 0 "$exifdate" \
+    #        mira-color-$exifdate.jpg
+#convert /tmp/zuidoost.jpg \
+    #    -crop 1280x960+0+0 \
+    #    -undercolor '#00000080' -fill yellow -pointsize 24 \
+    #    -annotate +1024+22 "$(date +"%Y/%m/%d - %H:%M:%S")" \
+    #    mira-zo-gray-$exifdate.jpg
+convert /tmp/west.jpg \
+        -crop 640x480+0+0 \
+        -undercolor '#00000080' -fill yellow -pointsize 24 \
+        -annotate +435+27 "$(date +"%Y/%m/%d - %H:%M:%S")" \
+        mira-w-gray-$exifdate.jpg
 
 exit
 
