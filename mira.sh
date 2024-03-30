@@ -41,6 +41,7 @@ while [ $SECONDS -lt $endrun ]; do
             -crop 640x480+0+0 \
             mira-w-gray-$timestamp.jpg
     git add mira-w-gray-$timestamp.jpg
+    git commit -m "Latest image: ${timestamp}"
 done
 
 exit
