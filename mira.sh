@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 thisscript=$0
 
 # let us see what we have alredy
@@ -29,8 +31,8 @@ while [ $SECONDS -lt $endrun ]; do
     cp /tmp/west.jpg /tmp/previous.jpg
     git pull
     convert /tmp/west.jpg \
-            \( +clone -crop 186x08+1094+0 +repage \) \
-            -geometry +451+0 -composite /tmp/west.jpg
+            \( +clone -crop 194x08+1086+0 +repage \) \
+            -geometry +443+0 -composite /tmp/west.jpg
     convert /tmp/west.jpg \
             -crop 640x480+0+0 \
             mira-w-gray-$timestamp.jpg
