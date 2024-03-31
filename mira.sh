@@ -29,11 +29,13 @@ while [ $SECONDS -lt $endrun ]; do
     cp /tmp/west.jpg /tmp/previous.jpg
     git pull
     convert /tmp/west.jpg \
-            \( +clone -crop 194x08+1086+0 +repage \) \
-            -geometry +443+0 -composite /tmp/west.jpg
+            \( +clone -crop 190x08+1088+0 +repage \) \
+            -geometry +448+0 -composite \
+	    -type grayscale \
+	    /tmp/west.jpg
     convert /tmp/west.jpg \
             -crop 640x480+0+0 \
-            mira-w-gray-$timestamp.jpg
+             mira-w-gray-$timestamp.jpg
     git add mira-w-gray-$timestamp.jpg
     git commit -m "Latest image: ${timestamp}"
     git push
