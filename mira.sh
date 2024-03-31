@@ -35,7 +35,7 @@ while [ $SECONDS -lt $endrun ]; do
 	    /tmp/west.jpg
     convert /tmp/west.jpg \
             -crop 640x480+0+0 \
-             mira-w-gray-$timestamp.jpg
+            mira-w-gray-$timestamp.jpg
     git add mira-w-gray-$timestamp.jpg
     git commit -m "Latest image: ${timestamp}"
     git push
