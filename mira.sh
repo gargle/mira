@@ -30,8 +30,7 @@ while [ $SECONDS -lt $endrun ]; do
     git pull
     convert /tmp/west.jpg \
             \( +clone -crop 190x08+1088+0 +repage \) \
-            -geometry +448+0 -composite \
-	    -type grayscale \
+            -geometry +448+0 -composite -type grayscale \
 	    /tmp/west.jpg
     convert /tmp/west.jpg \
             -crop 640x480+0+0 \
