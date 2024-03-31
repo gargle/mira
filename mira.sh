@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 thisscript=$0
 
 # let us see what we have alredy
